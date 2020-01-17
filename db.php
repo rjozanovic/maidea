@@ -8,6 +8,9 @@ class db
 
     private function __construct(){}
 
+    /**
+     * @return /PDO
+     */
     public static function getPdoHandle()
     {
         self::connect();

@@ -9,9 +9,9 @@ abstract class migrationAbstract
      */
     protected $pdo = null;
 
-    public function __construct($pdo)
+    public function __construct()
     {
-        $this->pdo = $pdo;
+        $this->pdo = \maidea\db::getPdoHandle();
     }
 
     abstract public function upgrade();

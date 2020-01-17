@@ -24,16 +24,17 @@ class migration_1 extends migrationAbstract
 
 
 
-        /*$this->pdo->exec("CREATE DATABASE IF NOT EXISTS maidea_rudolf_jozanovic;");
+        /*
+        $this->pdo->exec("CREATE DATABASE IF NOT EXISTS maidea_rudolf_jozanovic;");
 
         $this->pdo->exec("CREATE USER IF NOT EXISTS 'maidea_rj'@localhost IDENTIFIED BY 'password';");
         $this->pdo->exec("GRANT ALL PRIVILEGES ON maidea_rudolf_jozanovic.* TO maidea_rj@localhost;");
-        $this->pdo->exec("CREATE TABLE config ( id INT AUTO_INCREMENT PRIMARY KEY, key VARCHAR(64) NOT NULL, value INT NOT NULL ) ENGINE=INNODB; ");
+        $this->pdo->exec("CREATE TABLE config ( id INT AUTO_INCREMENT PRIMARY KEY, key VARCHAR(255) NOT NULL, value VARCHAR(255) NOT NULL ) ENGINE=INNODB; ");
 
         $this->pdo->exec("INSERT INTO config (key, value) VALUES ('migration_version', 0);");
         $this->pdo->exec("INSERT INTO config (key, value) VALUES ('migration_in_progress', 0);");
-        $this->pdo->exec("INSERT INTO config (key, value) VALUES ('migration_last_started', 0);");*/
-
+        $this->pdo->exec("INSERT INTO config (key, value) VALUES ('migration_last_started', 0);");
+        */
 
     }
 }

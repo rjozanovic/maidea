@@ -10,6 +10,8 @@ error_reporting(E_ALL);
 
 function autoloader($class)
 {
+    echo $class;
+
     $pieces = explode('\\', $class);
     if($pieces[0] === 'maidea'){
         array_shift($pieces);
@@ -25,16 +27,8 @@ function autoloader($class)
 spl_autoload_register('autoloader');
 
 
-/*include "migration/migration.php";
-include "migration/abstract.php";
-include "config.php";
-include "db.php";
-*/
 
-
-$pdo = maidea\db::getPdoHandle();
-
-$mig = new maidea\migration\migration($pdo);
+$mig = new \maidea\migration\migration();
 
 $mig->doUpgrades();
 

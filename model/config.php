@@ -5,25 +5,21 @@ namespace maidea\model;
 class config extends modelAbstract
 {
 
-    protected function getTable()
+    public static function getTableName()
     {
-        return 'patient';
+        return 'config';
     }
 
-    protected function getPkey()
+    public static function getPkName()
     {
-        return 'patient_id';
+        return 'id';
     }
 
-    protected function getFieldBindings()
+    public static function getSchema()
     {
         return array(
-            'patient_id' => self::T_SQL_INT,
-            'name' => self::T_SQL_INT,
-            'surname' => self::T_SQL_VARCHAR,
-            'date_of_birth' => self::T_SQL_VARCHAR,
-            'telephone' => self::T_SQL_VARCHAR,
-            'address' => self::T_SQL_VARCHAR,
+            'key' => PDO::PARAM_STR,
+            'value' => PDO::PARAM_STR,
         );
     }
 

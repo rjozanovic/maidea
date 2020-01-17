@@ -9,9 +9,9 @@ class migration
 
     private $pdo;
 
-    public function __construct($pdo)
+    public function __construct()
     {
-        $this->pdo = $pdo;
+        $this->pdo = \maidea\db::getPdoHandle();
     }
 
     public function doUpgrades()
@@ -73,9 +73,9 @@ class migration
         include $migFile;
 
         /** @var migrationAbstract $m */
-        $m = new $migClass($this->pdo);
+        $m = new $migClass();
 
-        if(!is_a($m, 'maidea\migration\migrationAbstract')) {
+        if(!is_a($m, '\maidea\migration\migrationAbstract')) {
             echo 'EXCEPTIOJ';
             throw new \Exception('Migration does not extend migrationAbstract class!');
         }
@@ -93,6 +93,10 @@ class migration
     private function markAsMigrated($migration)
     {
         //TODO
+        /*$configs = new \maidea\model\configs();
+        $version = $configs->fetchMigrationVersion();
+        var_dump($version->getValue());
+        die('value');*/
     }
 
     private function getMigrationFile($migrationNum)
@@ -102,7 +106,7 @@ class migration
 
     private function getMigrationClass($migrationNum)
     {
-        return 'maidea\migration\migration_' . $migrationNum;
+        return '\maidea\migration\migration_' . $migrationNum;
     }
 
 
