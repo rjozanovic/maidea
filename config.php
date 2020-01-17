@@ -7,6 +7,7 @@
  *
  */
 
+namespace maidea;
 
 class config{
 

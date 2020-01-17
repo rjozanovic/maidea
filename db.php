@@ -1,18 +1,22 @@
 <?php
 
+namespace maidea;
+
 class db
 {
-    private $pdo = null;
+    private static $pdo = null;
 
-    public function getPdoHandle()
+    private function __construct(){}
+
+    public static function getPdoHandle()
     {
-        $this->connect();
-        return $this->pdo;
+        self::connect();
+        return self::$pdo;
     }
 
-    private function connect()
+    private static function connect()
     {
-        if(!$this->pdo){
+        if(!self::$pdo){
             try{
                 $user = config::DB_USER_NAME;
                 $pass = config::DB_USER_PASSWORD;
@@ -24,7 +28,7 @@ class db
 
                 echo 'conn string: ' . $dsn;
 
-                $this->pdo = new PDO($dsn, $user, $pass);
+                self::$pdo = new \PDO($dsn, $user, $pass);
 
             } catch (Exception $e){
                 die('ERR connecting to db: ' . $e->getMessage());
@@ -32,10 +36,10 @@ class db
         }
     }
 
-    public function reconnect()
+    public static function reconnect()
     {
-        $this->pdo = null;
-        $this->connect();
+        self::$pdo = null;
+        self::connect();
     }
 
 }

@@ -1,9 +1,11 @@
 <?php
 
-class Migration
+namespace maidea\migration;
+
+class migration
 {
 
-    const MIGRATION_DIR = __DIR__ . DIRECTORY_SEPARATOR . 'migrations';
+    const MIGRATION_DIR = __DIR__;
 
     private $pdo;
 
@@ -17,16 +19,18 @@ class Migration
 
         //echo 'Doint upgrades.<hr>';
 
-        $migrationLimit = config::MIGRATE_VERSION;
+        $migrationLimit = \maidea\config::MIGRATE_VERSION;
 
         $current = 0;
 
-        while($current = $this->findNextMigrationFile($current, $migrationLimit)){
-            //echo '<br>' . $current . '</br>';
-            $this->runMigration($current);
+        try{
+            while($current = $this->findNextMigrationFile($current, $migrationLimit)){
+                //echo '<br>' . $current . '</br>';
+                $this->runMigration($current);
+            }
+        } catch (\Exception $e){
+            die($e->getMessage());
         }
-
-        //$this->findNextMigrationFile(0, $migrationLimit);
 
     }
 
@@ -56,11 +60,13 @@ class Migration
             //echo 'RETURNING: '. $bestCandidate;
             return $bestCandidate;
         } else
-            throw new Exception('Can\'t open migration directory!');
+            throw new \Exception('Can\'t open migration directory!');
     }
 
     private function runMigration($migrationNum)
     {
+        echo 'RUNNING '.$migrationNum;
+
         $migFile =  $this->getMigrationFile($migrationNum);
         $migClass = $this->getMigrationClass($migrationNum);
 
@@ -69,8 +75,12 @@ class Migration
         /** @var migrationAbstract $m */
         $m = new $migClass($this->pdo);
 
-        if(!is_a($m, 'migrationAbstract'))
-            throw new Exception('Migration does not extend migrationAbstract class!');
+        if(!is_a($m, 'maidea\migration\migrationAbstract')) {
+            echo 'EXCEPTIOJ';
+            throw new \Exception('Migration does not extend migrationAbstract class!');
+        }
+
+        echo 'upgrading ' . $migrationNum;
 
         $m->upgrade();
 
@@ -92,7 +102,7 @@ class Migration
 
     private function getMigrationClass($migrationNum)
     {
-        return 'migration_' . $migrationNum;
+        return 'maidea\migration\migration_' . $migrationNum;
     }
 
 
