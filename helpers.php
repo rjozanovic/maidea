@@ -4,7 +4,7 @@ namespace maidea;
 
 class helpers
 {
-    public static function fetchFile($url, $params)
+    public static function fetchFile($url, $params = array())
     {
         //TODO check status
         $conn = curl_init($url);

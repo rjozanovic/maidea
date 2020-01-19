@@ -59,8 +59,33 @@ class backendController extends controllerAbstract
                 $counter = 0;
             }
         }
+    }
+
+    public function pullWeatherDataAction()
+    {
+        $cityId = $this->getRequestParam('cityId');
+
+        $appId = \maidea\config::getConfig()['openWeather']['appId'];
+        $url = "http://api.openweathermap.org/data/2.5/weather?id={$cityId}&APPID={$appId}";
+
+        $json = \maidea\helpers::fetchFile($url);
+
+        $weather = new \maidea\model\weather();
+
+        $weather->setCityId($cityId);
+        $weather->setDatetime(date('Y-m-d H:i:s'));     //TODO read from json
+        $weather->setJson($json);
+        $weather->save();
+
+    }
+
+    public function pullForecastDataAction()
+    {
+        $cityId = $this->getRequestParam('cityId');
+        $appId = \maidea\config::getConfig()['openWeather']['appId'];
 
 
     }
+
 
 }
