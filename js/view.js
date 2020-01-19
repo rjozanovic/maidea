@@ -7,18 +7,6 @@ window.maidea = (function(m){
         return Mustache.render(template, data, m.view.partialTemplates);
     };
 
-    m.view.getPagerHtml = function(data){
-        return m.view.renderTemplate(m.view.getTemplate('pager'), data);
-    };
-
-    m.view.getModalHtml = function(data){
-        return m.view.renderTemplate(m.view.getTemplate('modal'), data);
-    };
-
-    m.view.getLoginFormHtml = function(){
-        return m.view.renderTemplate(m.view.getTemplate('login-form'), {});
-    };
-
     m.view.getTemplate = function(name){
         return document.getElementById('tpl-' + name).innerHTML;
     };

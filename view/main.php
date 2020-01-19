@@ -20,7 +20,22 @@ class main extends viewAbstract
 
         $data = array(
             'favoriteCities' => array(
-
+                array(
+                    "id" => 3186886,
+                    "name" => "Zagreb"
+                ),
+                 array(
+                     "id" => 3193935,
+                     "name" => "Osijek"
+                 ),
+                array(
+                    "id" => 3201047,
+                    "name" => "Dubrovnik"
+                ),
+                array(
+                    "id" => 5506956,
+                    "name" => "Las Vegas"
+                )
             ),
             'weather' => array(
                 'data' => $weatherData,

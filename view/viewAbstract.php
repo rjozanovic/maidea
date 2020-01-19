@@ -38,15 +38,7 @@ abstract class viewAbstract
         $js = "window.maidea_renderRequests = window.maidea_renderRequests || [];";
         $js .= "maidea_renderRequests.push({name: '{$name}', data: {$data}, scriptId: '{$scriptId}'});";
 
-        //var_dump($js);
-        //var_dump($scriptId);
-
         $ret = "<script id='{$scriptId}'>{$js}</script>";
-
-        //$ret = "script id=" . $js . ">";
-
-        /*var_dump($ret);
-        die();*/
 
         if(1)		//TODO static var check already included templates
             $ret .= "<script id='tpl-{$name}' type='x-tmpl-mustache'>{$tplData}</script>";

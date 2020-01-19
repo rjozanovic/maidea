@@ -68,6 +68,13 @@ class backendController extends controllerAbstract
         $appId = \maidea\config::getConfig()['openWeather']['appId'];
         $url = "http://api.openweathermap.org/data/2.5/weather?id={$cityId}&APPID={$appId}";
 
+        $cities = new \maidea\model\cities();
+        $city = $cities->getCityById($cityId);
+        if($city->getWeatherDownloadInProgress())      //prevent simultanious downloads
+            return;
+
+        $city->setWeatherDownloadInProgress(true);
+
         $json = \maidea\helpers::fetchFile($url);
         $weather = new \maidea\model\weather();
 
@@ -76,18 +83,24 @@ class backendController extends controllerAbstract
         $weather->setJson($json);
         $weather->save();
 
+        $city->setWeatherDownloadInProgress(false);
+
     }
 
     public function pullForecastDataAction()
     {
         $cityId = $this->getRequestParam('cityId');
         $appId = \maidea\config::getConfig()['openWeather']['appId'];
-
         $url = "http://api.openweathermap.org/data/2.5/forecast?id={$cityId}&APPID={$appId}";
 
-        $json = \maidea\helpers::fetchFile($url);
+        $cities = new \maidea\model\cities();
+        $city = $cities->getCityById($cityId);
+        if($city->getForecastDownloadInProgress())      //prevent simultanious downloads
+            return;
 
-        var_dump($json);
+        $city->setForecastDownloadInProgress(true);
+
+        $json = \maidea\helpers::fetchFile($url);
 
         $data = json_decode($json, true);
 
@@ -110,6 +123,8 @@ class backendController extends controllerAbstract
             $forecast->setJson(json_encode($forecastItem));
             $forecast->save();
         }
+
+        $city->setForecastDownloadInProgress(false);
 
     }
 

@@ -4,21 +4,32 @@ html, body{
     padding: 0;
 }
 
-.wrapper{
-    overflow: hidden;
-    height: 100%;
-}
-
 .sidebar{
-    width: 30%;
-    float: left;
-    height: 100%;
     background-color: #999;
 }
 
 .weather-info{
     background-color: #ccc;
-    width: 70%;
-    float: left;
-    height: 100%;
+}
+
+
+@media only screen and (min-width: 800px) {
+    .wrapper{
+        overflow: hidden;
+        height: 100%;
+    }
+    .sidebar{
+        width: 30%;
+        float: left;
+        height: 100%;
+    }
+    .weather-info{
+        width: 70%;
+        float: left;
+        height: 100%;
+    }
+    .forecast-item{
+        width: 33%;
+        float: left;
+    }
 }

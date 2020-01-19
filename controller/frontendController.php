@@ -6,11 +6,11 @@ class frontendController extends controllerAbstract
 {
     public function mainAction()
     {
-        $cityId = $this->getRequestParam('cityId') || 3186886;
-        $cityId = 3186886;
+        $cityId = $this->getRequestParam('cityId');
         echo $this->getView('main')->setData(array('cityId' => $cityId))->getOutput();
     }
 
+    //ajax
     public function getWeatherDataAction()
     {
         $cityId = $this->getRequestParam('cityId');
@@ -20,6 +20,7 @@ class frontendController extends controllerAbstract
         //TODO upToDate
     }
 
+    //ajax
     public function getForecastDataAction()
     {
         $cityId = $this->getRequestParam('cityId');

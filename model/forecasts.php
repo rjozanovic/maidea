@@ -16,6 +16,10 @@ class forecasts extends modelsAbstract
             ->setOrderBy('datetime ASC')
             ->setLimit(40)
             ->load();
+
+        if($this->count() < 40)       //pull new data
+            exec("php backgroundTask.php pullForecastData cityId={$cityId} >/dev/null 2>&1 &");
+
     }
 
 }

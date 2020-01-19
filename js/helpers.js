@@ -93,7 +93,8 @@ window.maidea = (function(m){
         var hours = m.helpers.intToTwoDigit(date.getHours());
         var minutes = m.helpers.intToTwoDigit(date.getMinutes());
         var seconds = m.helpers.intToTwoDigit(date.getSeconds());
-        return day + '.' + month + '.' + year + '. ' + hours + ':' + minutes + (includeSeconds ? (':' + seconds) : '');
+        //return day + '.' + month + '.' + year + '. ' + hours + ':' + minutes + (includeSeconds ? (':' + seconds) : '');
+        return day + '.' + month + '.' + year + '. ' + hours + 'h';
     };
 
     return m;

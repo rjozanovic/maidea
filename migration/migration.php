@@ -35,14 +35,20 @@ class migration
         $dbVersion = $dbConfig->getMigrationVersion();
 
         $current = $dbVersion;
+        $didMigrate = false;
         try{
-            while($current = $this->findNextMigrationFile($current, $migrationLimit))
+            while($current = $this->findNextMigrationFile($current, $migrationLimit)) {
+                $didMigrate = true;
                 $this->runMigration($current);
+            }
         } catch (\Exception $e){
             die($e->getMessage());
         }
 
         $dbConfig->setMigrationInProgress(false);
+
+        if($didMigrate)
+            echo "<hr>Migrating done, please reload the page!<hr>";
 
     }
 
@@ -88,7 +94,6 @@ class migration
         $m = new $migClass();
 
         if(!is_a($m, '\maidea\migration\migrationAbstract')) {       //TODO can remove namespace?
-            echo 'EXCEPTIOJ';
             throw new \Exception('Migration does not extend migrationAbstract class!');
         }
 

@@ -25,6 +25,14 @@ class weathers extends modelsAbstract
          * @var \maidea\model\weather $freshWeather
          */
         $freshWeather = $this->current();
+
+        $cfg = new \maidea\model\configs();
+
+        $weatherData = json_decode($freshWeather->getJson(), true);
+        $lastDownload = $weatherData['dt'];
+        if($lastDownload + (int)$cfg->getValue('weather_valid_duration') < time())
+            exec("php backgroundTask.php pullWeatherData cityId={$cityId} >/dev/null 2>&1 &");
+
         return $freshWeather;
     }
 
