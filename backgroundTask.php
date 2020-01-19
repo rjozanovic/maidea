@@ -1,6 +1,6 @@
 <?php
 
-if(count($argv) >= 2) {       //background task
+if(count($argv) >= 2) {
 
     $_REQUEST['controller'] = 'backend';
     $_REQUEST['action'] = $argv[1];

@@ -20,14 +20,18 @@ class controllerAbstract
         return $name . 'Action';
     }
 
-    /*private function getViewClassName($name){
-        return $name . 'View';
+    private function getViewClassName($name){
+        return "\\maidea\\view\\" . $name;
     }
 
+    /**
+     * @param string $name
+     * @return \maidea\view\viewAbstract
+     */
     protected function getView($name){
         $class = $this -> getViewClassName($name);
         return new $class();
-    }*/
+    }
 
     protected function getRequestParam($name)
     {

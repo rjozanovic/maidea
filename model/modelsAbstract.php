@@ -92,6 +92,19 @@ abstract class modelsAbstract implements \iterator
         $this->where = $sql;
         $this->bindValues = $bindValues;
         $this->bindTypes = $bindTypes;
+        return $this;
+    }
+
+    public function setOrderBy($sql)
+    {
+        $this->orderBy = $sql;
+        return $this;
+    }
+
+    public function setLimit($number)
+    {
+        $this->limit = $number;
+        return $this;
     }
 
     protected function getSelectSql()
@@ -101,6 +114,7 @@ abstract class modelsAbstract implements \iterator
         $sql .= $this->orderBy ? ' ORDER BY ' . $this->orderBy : '';
         $sql .= $this->limit ? ' LIMIT ' . $this->limit : '';
         $sql .= ';';
+        //var_dump($sql);
         return $sql;
     }
 

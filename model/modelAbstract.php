@@ -116,7 +116,7 @@ abstract class modelAbstract
         $cols = array_keys($this->data);
         $sql = 'INSERT INTO ' . $this->getTableName();
         $sql = $sql . ' (' . implode(', ', $cols) . ') VALUES (:' . implode(', :', $cols) . ');';
-        var_dump($sql);
+        //var_dump($sql);
         return $sql;
     }
 
@@ -124,7 +124,7 @@ abstract class modelAbstract
     {
         $cols = array_keys($this->data);
         foreach ($cols as $col) {
-            echo '<br>binding ' . ':' . $col . ' ' . $this->data[$col] . ' ' . $this->getFieldBindType($col);
+            //echo '<br>binding ' . ':' . $col . ' ' . $this->data[$col] . ' ' . $this->getFieldBindType($col);
             $stmt->bindValue(':' . $col, $this->data[$col], $this->getFieldBindType($col));
         }
     }

@@ -9,13 +9,13 @@ To run this you will need:
 
  Installation:
  -------------
- There is no need to run composer as there are no dependancies. You do however need to create an empty database
+ There is no need to run composer as there are no dependencies. You do however need to create an empty database
  and a user that has permissions to read/write from it:
 
  To do this you can just run bellow SQLs:
   CREATE DATABASE IF NOT EXISTS maidea_rudolf_jozanovic;
-  CREATE USER IF NOT EXISTS 'maidea_rj'@localhost IDENTIFIED BY 'password';
-  GRANT ALL PRIVILEGES ON maidea_rudolf_jozanovic.* TO maidea_rj@localhost;
+  CREATE USER IF NOT EXISTS 'maidea_rj'@'localhost' IDENTIFIED BY 'password';
+  GRANT ALL PRIVILEGES ON maidea_rudolf_jozanovic.* TO 'maidea_rj'@'localhost';
 
  If you want to use different name for database or user you will need to update config.json as well.
 

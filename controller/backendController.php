@@ -69,7 +69,6 @@ class backendController extends controllerAbstract
         $url = "http://api.openweathermap.org/data/2.5/weather?id={$cityId}&APPID={$appId}";
 
         $json = \maidea\helpers::fetchFile($url);
-
         $weather = new \maidea\model\weather();
 
         $weather->setCityId($cityId);
@@ -84,6 +83,33 @@ class backendController extends controllerAbstract
         $cityId = $this->getRequestParam('cityId');
         $appId = \maidea\config::getConfig()['openWeather']['appId'];
 
+        $url = "http://api.openweathermap.org/data/2.5/forecast?id={$cityId}&APPID={$appId}";
+
+        $json = \maidea\helpers::fetchFile($url);
+
+        var_dump($json);
+
+        $data = json_decode($json, true);
+
+        foreach($data['list'] as $forecastItem){
+
+            //find row where city and datetime match this ones. if so, update, don't insert a new row
+            $forecasts = new \maidea\model\forecasts();
+            $forecasts->setWhere('city_id = :city_id AND datetime = :datetime',
+                array('city_id' => $cityId, 'datetime' => date('Y-m-d H:i:s', $forecastItem['dt'])),
+                array('city_id' => \PDO::PARAM_INT, 'datetime' => \PDO::PARAM_STR))
+                ->setLimit(1)->load();
+
+            if($forecasts->count())
+                $forecast = $forecasts->current();
+            else
+                $forecast = new \maidea\model\forecast();
+
+            $forecast->setCityId($cityId);
+            $forecast->setDatetime(date('Y-m-d H:i:s', $forecastItem['dt']));     //TODO read from json
+            $forecast->setJson(json_encode($forecastItem));
+            $forecast->save();
+        }
 
     }
 
