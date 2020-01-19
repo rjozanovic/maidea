@@ -1,0 +1,12 @@
+{
+  "db": {
+    "host": "localhost",
+    "username": "rudi",
+    "password": "flood1",
+    "dbname": "maidea_rudolf_jozanovic",
+    "migrationVersion": 1
+  },
+  "openWeather": {
+    "appId": "98bc527eefcf01809255358285f29266"
+  }
+}

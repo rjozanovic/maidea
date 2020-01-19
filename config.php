@@ -9,14 +9,16 @@
 
 namespace maidea;
 
-class config{
+class config
+{
 
-    const DB_HOST = 'localhost';
-    const DB_USER_NAME = 'rudi';
-    const DB_USER_PASSWORD = 'flood1';
-    //const DB_DATABASE_NAME = 'maidea_rudolf_jozanovic';
-    const DB_DATABASE_NAME = null;
+    const CONFIG_FILE = __DIR__ . DIRECTORY_SEPARATOR . 'config.json';
 
-    const MIGRATE_VERSION = 2;
+    private function __construct(){}
+
+    public static function getConfig()
+    {
+        return json_decode(file_get_contents(self::CONFIG_FILE), true);
+    }
 
 }

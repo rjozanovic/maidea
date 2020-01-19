@@ -17,17 +17,24 @@ class migration
     public function doUpgrades()
     {
 
-        //echo 'Doint upgrades.<hr>';
+        $config = \maidea\config::getConfig();
+        $migrationLimit = $config['db']['migrationVersion'];
 
-        $migrationLimit = \maidea\config::MIGRATE_VERSION;
+        $dbConfig = new \maidea\model\configs();
 
-        $current = 0;
+        if($dbConfig->getMigrationInProgress()){
+            if($dbConfig->getMigrationLastStarted()->add(new DateInterval('PT' . $dbConfig->getMigrationAllowedDuration())) < new \DateTime())
+                $dbConfig->setValue('migration_in_progress', '0');
+            else
+                die('Databse migration in progress... Please try again in a few moments!');
+        }
 
+        $dbVersion = $dbConfig->getMigrationVersion();
+
+        $current = $dbVersion;
         try{
-            while($current = $this->findNextMigrationFile($current, $migrationLimit)){
-                //echo '<br>' . $current . '</br>';
+            while($current = $this->findNextMigrationFile($current, $migrationLimit))
                 $this->runMigration($current);
-            }
         } catch (\Exception $e){
             die($e->getMessage());
         }
@@ -65,7 +72,7 @@ class migration
 
     private function runMigration($migrationNum)
     {
-        echo 'RUNNING '.$migrationNum;
+        echo '<hr>RUNNING MIGRATION '.$migrationNum . '<hr>';
 
         $migFile =  $this->getMigrationFile($migrationNum);
         $migClass = $this->getMigrationClass($migrationNum);
@@ -75,16 +82,14 @@ class migration
         /** @var migrationAbstract $m */
         $m = new $migClass();
 
-        if(!is_a($m, '\maidea\migration\migrationAbstract')) {
+        if(!is_a($m, '\maidea\migration\migrationAbstract')) {       //TODO can remove namespace?
             echo 'EXCEPTIOJ';
             throw new \Exception('Migration does not extend migrationAbstract class!');
         }
 
-        echo 'upgrading ' . $migrationNum;
 
         $m->upgrade();
 
-        echo 'About to run migration: ' . $migrationNum;
 
         $this->markAsMigrated($migrationNum);
 
@@ -92,11 +97,8 @@ class migration
 
     private function markAsMigrated($migration)
     {
-        //TODO
-        /*$configs = new \maidea\model\configs();
-        $version = $configs->fetchMigrationVersion();
-        var_dump($version->getValue());
-        die('value');*/
+        $configs = new \maidea\model\configs();
+        $configs->setMigrationVersion($migration);
     }
 
     private function getMigrationFile($migrationNum)
@@ -106,7 +108,7 @@ class migration
 
     private function getMigrationClass($migrationNum)
     {
-        return '\maidea\migration\migration_' . $migrationNum;
+        return '\maidea\migration\migration_' . $migrationNum;      //TODO can remove namespace?
     }
 
 

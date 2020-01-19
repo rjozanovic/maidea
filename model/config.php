@@ -12,14 +12,14 @@ class config extends modelAbstract
 
     public static function getPkName()
     {
-        return 'id';
+        return 'name';
     }
 
     public static function getSchema()
     {
         return array(
-            'key' => PDO::PARAM_STR,
-            'value' => PDO::PARAM_STR,
+            'name' => \PDO::PARAM_STR,
+            'value' => \PDO::PARAM_STR,
         );
     }
 

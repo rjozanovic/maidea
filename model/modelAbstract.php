@@ -4,6 +4,9 @@
  * Class modelAbstract
  *
  * Represents a row in table
+ *
+ *
+ *
  */
 
 namespace maidea\model;
@@ -21,7 +24,7 @@ abstract class modelAbstract
 
     public function __construct()
     {
-        $this->pdo = maidea\db::getPdoHandle();
+        $this->pdo = \maidea\db::getPdoHandle();
     }
 
     /**
@@ -40,7 +43,7 @@ abstract class modelAbstract
         if(substr($name, 0, strlen($setPfix)) === $setPfix){        //setter
             $pName = substr($name, -1 * (strlen($name) - strlen($setPfix)));
             $pName = $this->convName($pName);
-            $pk = $this->getPkey();
+            $pk = $this->getPkName();
             if($pName !== $pk)
                 $this->data[$pName] = $args[0];
             return $this;
@@ -54,7 +57,7 @@ abstract class modelAbstract
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindValue(':pkValue', $pkValue, $this->getFieldBindType($this->getPkName()));
             $stmt->execute();
-            $this->data = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
+            $this->data = $stmt->fetchAll(\PDO::FETCH_ASSOC)[0];
         } catch (Exception $e) {
             die('err'); //TODO
         }
@@ -72,6 +75,11 @@ abstract class modelAbstract
         //TODO disable setting primary key
         $this->data = $data;
         return $this;
+    }
+
+    public function getData()
+    {
+        return $this->data;
     }
 
     public function save()
@@ -126,6 +134,22 @@ abstract class modelAbstract
     public function getFieldNames()
     {
         return array_keys($this->getSchema());
+    }
+
+    /**
+     * Depending on if first character is upper or lover case, converts from
+     * camel case to underscore or reverse.
+     * @param string $name
+     * @return string
+     */
+    protected function convName($name){
+        if(ctype_upper(substr($name, 0, 1))){
+            $name = strtolower(preg_replace('/([^A-Z])([A-Z])/', "$1_$2", $name));
+        }
+        else{
+            $name = preg_replace('/(?:^|_)(.?)/e',"strtoupper('$1')", $name);
+        }
+        return $name;
     }
 
 }

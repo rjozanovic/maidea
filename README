@@ -1,0 +1,35 @@
+Weather project by Rudolf Jozanović
+-----------------------------------
+
+To run this you will need:
+ -php 5.3+
+ -mysql
+
+ Installation:
+ -------------
+ There is no need to run composer as there are no dependancies. You do however need to create an empty database
+ and a user that has permissions to read/write from it:
+
+ To do this you can just run bellow SQLs:
+  CREATE DATABASE IF NOT EXISTS maidea_rudolf_jozanovic;
+  CREATE USER IF NOT EXISTS 'maidea_rj'@localhost IDENTIFIED BY 'password';
+  GRANT ALL PRIVILEGES ON maidea_rudolf_jozanovic.* TO maidea_rj@localhost;
+
+ Database will be populated with tables and required data the first time you run anything.
+
+ Frontend:
+ ----------
+ Displays page layout and fetches weather data from the server.
+
+ Backend:
+ --------
+ Stores weather data in the database, returns it when requested by the frontend if requested
+ initiate
+
+ Used libraries:
+  -php:
+    -
+  -js:
+    -mustache templating library
+
+

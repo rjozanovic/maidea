@@ -25,7 +25,7 @@ abstract class modelsAbstract implements \iterator
 
     public function __construct()
     {
-        $this->pdo = maidea\db::getPdoHandle();
+        $this->pdo = \maidea\db::getPdoHandle();
     }
 
     abstract static protected function getModelName();
@@ -37,7 +37,7 @@ abstract class modelsAbstract implements \iterator
         /**
          * @var modelAbstract $modelName
          */
-        $modelName = $this->getModelName();
+        $modelName = '\\maidea\\model\\' . $this->getModelName();
         return array_keys($modelName::getSchema());
     }
 
@@ -46,7 +46,7 @@ abstract class modelsAbstract implements \iterator
         /**
          * @var modelAbstract $modelName
          */
-        $modelName = $this->getModelName();
+        $modelName = '\\maidea\\model\\' . $this->getModelName();
         return $modelName::getTableName();
     }
 
@@ -77,7 +77,7 @@ abstract class modelsAbstract implements \iterator
 
     protected function createModel($data)
     {
-        $modelName = $this->getModelName();
+        $modelName = '\\maidea\\model\\' . $this->getModelName();
         $model = new $modelName();
         return $model->setData($data);
     }
@@ -116,7 +116,7 @@ abstract class modelsAbstract implements \iterator
         $stmt = $this->pdo->prepare($this->getSelectSql());
         $this->bindParams($stmt);
         $stmt->execute();
-        $rs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $rs = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         if($rs !== null){
             //$this->loaded = true;//TODO
             $this->data = $rs;

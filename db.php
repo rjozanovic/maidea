@@ -21,17 +21,9 @@ class db
     {
         if(!self::$pdo){
             try{
-                $user = config::DB_USER_NAME;
-                $pass = config::DB_USER_PASSWORD;
-                $host = config::DB_HOST;
-                $db = config::DB_DATABASE_NAME;
-
-                $dsn = 'mysql:host=' . $host;
-                $dsn .= $db ? ';dbname=' . $db : '';
-
-                echo 'conn string: ' . $dsn;
-
-                self::$pdo = new \PDO($dsn, $user, $pass);
+                $config = \maidea\config::getConfig();
+                $dsn = 'mysql:host=' . $config['db']['host'] . ';dbname=' . $config['db']['dbname'];
+                self::$pdo = new \PDO($dsn, $config['db']['username'], $config['db']['password']);
 
             } catch (Exception $e){
                 die('ERR connecting to db: ' . $e->getMessage());

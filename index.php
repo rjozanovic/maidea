@@ -1,17 +1,12 @@
 
-
 <?php
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-//phpinfo();
-
 function autoloader($class)
 {
-    echo $class;
-
     $pieces = explode('\\', $class);
     if($pieces[0] === 'maidea'){
         array_shift($pieces);
@@ -26,10 +21,15 @@ function autoloader($class)
 
 spl_autoload_register('autoloader');
 
-
-
 $mig = new \maidea\migration\migration();
-
 $mig->doUpgrades();
 
+if(count($argv) >= 2) {       //background task
+    die('is background task');
+    $_REQUEST['controller'] = 'backend';
+    $_REQUEST['action'] = $argv[1];
+    $_REQUEST['consoleParams'] = array_slice($argv, 1);
+}
+
+$controller = new \maidea\controller\indexController();
 
