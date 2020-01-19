@@ -7,10 +7,60 @@ class backendController extends controllerAbstract
 
     public function pullCityDataAction()
     {
-        $cfg = new \maidea\model\config();
-        $cfg->setData(array('name' => 'test', 'value' => 'trst'));
-        sleep(20);
-        die('pullCityDataAction');
+
+        set_time_limit(100);
+        ini_set('memory_limit', '256M');
+
+        //download city list
+        $url = "http://bulk.openweathermap.org/sample/city.list.min.json.gz";
+        $tmp = "/tmp/city.list.min.json.gz";
+        $fp = fopen($tmp, "w");
+        $ch = \curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_FAILONERROR, true);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_AUTOREFERER, true);
+        curl_setopt($ch, CURLOPT_BINARYTRANSFER,true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_FILE, $fp);
+        $page = curl_exec($ch);
+        if(!$page) {
+            echo "Error :- ".curl_error($ch);
+        }
+        curl_close($ch);
+
+        //unzip
+        $bufferSize = 4096;
+        $outFileName = str_replace('.gz', '', $tmp);
+        $file = gzopen($tmp, 'rb');
+        $outFile = fopen($outFileName, 'wb');
+        while (!gzeof($file))
+            fwrite($outFile, gzread($file, $bufferSize));
+        fclose($outFile);
+        gzclose($file);
+
+        //save to db
+        $citysData = json_decode(file_get_contents($outFileName), true);
+        $values = array();
+        $batchSize = 1000;
+        $counter = 0;
+        $pdo = \maidea\db::getPdoHandle();
+        foreach($citysData as $cityData){
+            $cityData = array($cityData['id'], '"' . $cityData['name'] . '"', '"' . $cityData['country'] . '"');
+            $values[] = '(' . implode(',', $cityData) . ')';
+            $counter++;
+            if($counter >= $batchSize){
+                $sql = 'INSERT INTO city (city_id, name, country) VALUES ' . implode(',', $values) . ';';
+                $pdo->exec($sql);
+                $values = array();
+                $counter = 0;
+            }
+        }
+
+
     }
 
 }

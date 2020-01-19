@@ -8,7 +8,7 @@ class indexController extends controllerAbstract
     function __construct(){
 
         $opt = array(
-            'controller' => 'user',
+            'controller' => 'frontend',
             'action' => 'main'
         );
 

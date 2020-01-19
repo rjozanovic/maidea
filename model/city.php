@@ -2,12 +2,12 @@
 
 namespace maidea\model;
 
-class config extends modelAbstract
+class city extends modelAbstract
 {
 
     public static function getTableName()
     {
-        return 'config';
+        return 'city';
     }
 
     public static function getPkName()
@@ -19,8 +19,9 @@ class config extends modelAbstract
     {
         return array(
             'id' => \PDO::PARAM_INT,
+            'city_id' => \PDO::PARAM_INT,
             'name' => \PDO::PARAM_STR,
-            'value' => \PDO::PARAM_STR,
+            'country' => \PDO::PARAM_STR,
         );
     }
 

@@ -3,6 +3,8 @@ Weather project by Rudolf Jozanović
 
 To run this you will need:
  -php 5.3+
+    -php-mysql
+    -php-curl
  -mysql
 
  Installation:
@@ -15,7 +17,9 @@ To run this you will need:
   CREATE USER IF NOT EXISTS 'maidea_rj'@localhost IDENTIFIED BY 'password';
   GRANT ALL PRIVILEGES ON maidea_rudolf_jozanovic.* TO maidea_rj@localhost;
 
- Database will be populated with tables and required data the first time you run anything.
+ If you want to use different name for database or user you will need to update config.json as well.
+
+ Database will be automatically populated with tables and required data the first time you run anything.
 
  Frontend:
  ----------

@@ -69,7 +69,7 @@ abstract class modelAbstract
         return $this->getSchema()[$fieldName];
     }
 
-    public function setData($data)
+    public function forceData($data)
     {
         //TODO check vs schema
         //TODO disable setting primary key
@@ -77,7 +77,7 @@ abstract class modelAbstract
         return $this;
     }
 
-    public function getData()
+    public function returnData()
     {
         return $this->data;
     }
@@ -116,20 +116,23 @@ abstract class modelAbstract
         $cols = array_keys($this->data);
         $sql = 'INSERT INTO ' . $this->getTableName();
         $sql = $sql . ' (' . implode(', ', $cols) . ') VALUES (:' . implode(', :', $cols) . ');';
+        var_dump($sql);
         return $sql;
     }
 
     private function bindParams($stmt)
     {
         $cols = array_keys($this->data);
-        foreach ($cols as $col)
+        foreach ($cols as $col) {
+            echo '<br>binding ' . ':' . $col . ' ' . $this->data[$col] . ' ' . $this->getFieldBindType($col);
             $stmt->bindValue(':' . $col, $this->data[$col], $this->getFieldBindType($col));
+        }
     }
 
-    public function getJson()
+    /*public function getJson()
     {
         return json_encode($this->data);
-    }
+    }*/
 
     public function getFieldNames()
     {

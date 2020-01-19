@@ -79,7 +79,7 @@ abstract class modelsAbstract implements \iterator
     {
         $modelName = '\\maidea\\model\\' . $this->getModelName();
         $model = new $modelName();
-        return $model->setData($data);
+        return $model->forceData($data);
     }
 
     /**

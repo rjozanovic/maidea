@@ -1,6 +1,8 @@
 
 <?php
 
+
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -21,15 +23,17 @@ function autoloader($class)
 
 spl_autoload_register('autoloader');
 
+
+/*$newCity = new \maidea\model\city();
+$newCity->setCityId(134);
+$newCity->setName('test');
+$newCity->setCountry('tst');
+$newCity->save();
+die();*/
+
+
 $mig = new \maidea\migration\migration();
 $mig->doUpgrades();
-
-if(count($argv) >= 2) {       //background task
-    die('is background task');
-    $_REQUEST['controller'] = 'backend';
-    $_REQUEST['action'] = $argv[1];
-    $_REQUEST['consoleParams'] = array_slice($argv, 1);
-}
 
 $controller = new \maidea\controller\indexController();
 

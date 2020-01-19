@@ -24,10 +24,13 @@ class migration
 
         if($dbConfig->getMigrationInProgress()){
             if($dbConfig->getMigrationLastStarted()->add(new DateInterval('PT' . $dbConfig->getMigrationAllowedDuration())) < new \DateTime())
-                $dbConfig->setValue('migration_in_progress', '0');
+                $dbConfig->setMigrationInProgress(false);
             else
                 die('Databse migration in progress... Please try again in a few moments!');
         }
+
+        $dbConfig->setMigrationInProgress(true);
+        //TODO store migration time in db
 
         $dbVersion = $dbConfig->getMigrationVersion();
 
@@ -38,6 +41,8 @@ class migration
         } catch (\Exception $e){
             die($e->getMessage());
         }
+
+        $dbConfig->setMigrationInProgress(false);
 
     }
 

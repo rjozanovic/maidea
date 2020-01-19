@@ -5,14 +5,14 @@ namespace maidea\controller;
 class controllerAbstract
 {
 
-    public function __call($name, $args)
+    /*public function __call($name, $args)
     {
         echo $this->getView('error404');
-    }
+    }*/
 
     protected function getControllerClassName($name)
     {
-        return $name . 'Controller';
+        return "\\maidea\\controller\\" . $name . 'Controller';
     }
 
     protected function getActionFunctionName($name)

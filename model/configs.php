@@ -54,6 +54,11 @@ class configs extends modelsAbstract
         return (bool)$this->getValue('migration_in_progress');
     }
 
+    public function setMigrationInProgress($bool)
+    {
+        return $this->setValue('migration_in_progress', (int)$bool);
+    }
+
     /**
      * @return \DateTime
      */
