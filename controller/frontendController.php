@@ -36,4 +36,14 @@ class frontendController extends controllerAbstract
         echo json_encode($cities->getAutocompleteCities($q));
     }
 
+    public function addFavoriteAction()
+    {
+        $cityId = $this->getRequestParam('cityId');
+        $cookie = $_COOKIE['maidea_weather'];
+        $favorite = new \maidea\model\favorite();
+        $favorite->setCookie($cookie);
+        $favorite->setCityId($cityId);
+        $favorite->save();
+    }
+
 }

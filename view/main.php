@@ -8,9 +8,10 @@ class main extends viewAbstract
 
         $weathers = new \maidea\model\weathers();
         $forecasts = new \maidea\model\forecasts();
+        $favorites = new \maidea\model\favorites();
 
         $data = array(
-            'favoriteCities' => array(
+            /*'favoriteCities' => array(
                 array(
                     "id" => 3186886,
                     "name" => "Zagreb"
@@ -27,7 +28,8 @@ class main extends viewAbstract
                     "id" => 5506956,
                     "name" => "Las Vegas"
                 )
-            ),
+            ),*/
+            'favoriteCities' => $favorites->getJsonWithExtInfo($_COOKIE['maidea_weather']),
             'weather' => $weathers->getJsonWithExtInfo($this->data['cityId']),
             'forecasts' => $forecasts->getJsonWithExtInfo($this->data['cityId'])
         );

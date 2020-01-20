@@ -1,10 +1,13 @@
 <div class="sidebar">
-
-    <input id="autoComplete" tabindex="1">    <!-- Default "id" value = "autoComplete"> -->
-
-    {{#.}}
-    <div class="favorite-city">
-        <a href="index.php?cityId={{id}}">{{name}}</a>
-    </div>
-    {{/.}}
+    <input id="autoComplete" tabindex="1">
+    <fieldset>
+        <legend>Favorites:</legend>
+        {{#data}}
+            {{#.}}
+                <div class="favorite-city">
+                    <a href="index.php?cityId={{id}}">{{name}}</a>
+                </div>
+            {{/.}}
+        {{/data}}
+    </fieldset>
 </div>

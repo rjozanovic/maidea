@@ -1,11 +1,12 @@
 
 <?php
 
-
-
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
+if(!isset($_COOKIE['maidea_weather']))
+    setcookie("maidea_weather", uniqid(), time() + 3600 * 24 * 365);
 
 function autoloader($class)
 {
@@ -22,15 +23,6 @@ function autoloader($class)
 }
 
 spl_autoload_register('autoloader');
-
-
-/*$newCity = new \maidea\model\city();
-$newCity->setCityId(134);
-$newCity->setName('test');
-$newCity->setCountry('tst');
-$newCity->save();
-die();*/
-
 
 $mig = new \maidea\migration\migration();
 $mig->doUpgrades();
