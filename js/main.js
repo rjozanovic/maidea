@@ -1,7 +1,5 @@
 window.maidea = (function(m){
 
-    var lastRendered = {};
-
     function render(name, data){
         var template = m.view.getTemplate(name);
         var data = m.view.processData.all(data);
@@ -12,7 +10,22 @@ window.maidea = (function(m){
     }
 
     function processChange(name, data, target){
-
+        var frag = render(name, data);
+        target.parentNode.replaceChild(frag, target);
+        var addFav = document.getElementById('addToFavorites');     //TODO
+        if(name === 'weather' && addFav){
+            addFav.addEventListener('click', function(ev){
+                ev.preventDefault();
+                m.ajax.get(addFav.getAttribute('href'), function(){window.location.reload();}, false);
+            });
+        }
+        if(data.hasOwnProperty('reload') && data.reload.hasOwnProperty('inTime')){
+            setTimeout(function(){
+                m.ajax.get(data.reload.dataUrl, function(resp){
+                    processChange(name, resp, document.getElementById('out-'+name));
+                }, true);
+            }, data.reload.inTime * 1000);
+        }
     }
 
     m.init = function(){
@@ -20,27 +33,9 @@ window.maidea = (function(m){
         m.view.registerPartialTemplates();
 
         for(var i in window.maidea_renderRequests){
-
-                var item = window.maidea_renderRequests[i];
-
-                var frag = render(item.name, item.data);
-
-                var script = document.getElementById(item.scriptId);
-                script.parentNode.replaceChild(frag, script);
-
-                /*lastRendered[item.name] = {item: item, target: frag.firstElementChild};
-
-                if(item.data.hasOwnProperty('reload') && item.data.reload.hasOwnProperty('inTime')){
-                    setTimeout(function(){
-                        m.ajax.get(item.data.reload.dataUrl, function(resp){
-
-                        }, true);
-                    }, item.data.reload.inTime * 1000);
-                }*/
-
+            var item = window.maidea_renderRequests[i];
+            processChange(item.name, item.data, document.getElementById(item.scriptId));
         }
-
-        console.log(lastRendered);
 
     };
 

@@ -1,4 +1,4 @@
-<div class="weather-now">
+<div id="out-weather" class="weather-now">
     {{#data}}
         <fieldset>
             <legend>Current weather in {{name}} ({{#formatDate}}{{dt}}{{/formatDate}})</legend>
@@ -21,7 +21,7 @@
                 </ul>
             </div>
             <div class="favorites-box">
-                <a href="index.php?action=addFavorite&cityId={{id}}">Add to favorites.</a>
+                <a id="addToFavorites" href="index.php?action=addFavorite&cityId={{id}}">Add to favorites.</a>
             </div>
         </fieldset>
     {{/data}}

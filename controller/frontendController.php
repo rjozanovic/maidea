@@ -41,6 +41,12 @@ class frontendController extends controllerAbstract
     {
         $cityId = $this->getRequestParam('cityId');
         $cookie = $_COOKIE['maidea_weather'];
+        $favs = new \maidea\model\favorites();
+        $info = $favs->getJsonWithExtInfo($cookie);
+        foreach($info['data'] as $cityInfo){
+            if($cityInfo['id'] === $cityId)
+                return;
+        }
         $favorite = new \maidea\model\favorite();
         $favorite->setCookie($cookie);
         $favorite->setCityId($cityId);

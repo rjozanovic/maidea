@@ -15,11 +15,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
-
-    <!--link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/css/autoComplete.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/js/autoComplete.min.js"></script-->
-
     <link rel="stylesheet" type="text/css" href="css/autoComplete.css">
     <script src="js/vendor/autoComplete.min.js"></script>
 
@@ -30,22 +25,18 @@
             window.maidea.init();
 
             new autoComplete({
-                data: {                              // Data src [Array, Function, Async] | (REQUIRED)
+                data: {
                     src: async () => {
-                        // User search query
                         const query = document.querySelector("#autoComplete").value;
-                        // Fetch External Data Source
                         const source = await fetch(`index.php?action=getCityAutocomplete&q=${query}`);
-                        // Format data into JSON
                         const data = await source.json();
-                        // Return Fetched data
-                        console.log(data);
-
                         return data;
                     },
                     key: ["title"],
                     cache: false
                 },
+                maxResults: 10,
+                highlight: true,
 
                 resultsList: {
                     render: true

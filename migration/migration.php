@@ -22,14 +22,17 @@ class migration
 
         $dbConfig = new \maidea\model\configs();
 
-        if($dbConfig->getMigrationInProgress()){
-            if($dbConfig->getMigrationLastStarted()->add(new DateInterval('PT' . $dbConfig->getMigrationAllowedDuration())) < new \DateTime())
+        //TODO fix this
+        //if($dbConfig->getMigrationInProgress()){
+            //TODO safeguard if migration fails
+            /*$date = new \DateTime($dbConfig->getValue('migration_last_started'));
+            if($date->add(new \DateInterval('PT' . $dbConfig->getMigrationAllowedDuration())) < new \DateTime())
                 $dbConfig->setMigrationInProgress(false);
-            else
-                die('Databse migration in progress... Please try again in a few moments!');
-        }
+            else*/
+                //die('Databse migration in progress... Please try again in a few moments!');
+        //}
 
-        $dbConfig->setMigrationInProgress(true);
+        //$dbConfig->setMigrationInProgress(true);
         //TODO store migration time in db
 
         $dbVersion = $dbConfig->getMigrationVersion();
@@ -45,10 +48,10 @@ class migration
             die($e->getMessage());
         }
 
-        $dbConfig->setMigrationInProgress(false);
+        //$dbConfig->setMigrationInProgress(false);
 
-        if($didMigrate)
-            echo "<hr>Migrating done, please reload the page!<hr>";
+        /*if($didMigrate)
+            echo "<hr>Migrating done, please reload the page!<hr>";*/
 
     }
 
@@ -83,7 +86,7 @@ class migration
 
     private function runMigration($migrationNum)
     {
-        echo '<hr>RUNNING MIGRATION '.$migrationNum . '<hr>';
+        /*echo '<hr>RUNNING MIGRATION '.$migrationNum . '<hr>';*/
 
         $migFile =  $this->getMigrationFile($migrationNum);
         $migClass = $this->getMigrationClass($migrationNum);
