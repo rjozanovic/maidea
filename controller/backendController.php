@@ -66,7 +66,7 @@ class backendController extends controllerAbstract
         $cityId = $this->getRequestParam('cityId');
 
         $appId = \maidea\config::getConfig()['openWeather']['appId'];
-        $url = "http://api.openweathermap.org/data/2.5/weather?id={$cityId}&APPID={$appId}";
+        $url = "http://api.openweathermap.org/data/2.5/weather?id={$cityId}&units=imperial&APPID={$appId}";
 
         $cities = new \maidea\model\cities();
         $city = $cities->getCityById($cityId);
@@ -91,7 +91,7 @@ class backendController extends controllerAbstract
     {
         $cityId = $this->getRequestParam('cityId');
         $appId = \maidea\config::getConfig()['openWeather']['appId'];
-        $url = "http://api.openweathermap.org/data/2.5/forecast?id={$cityId}&APPID={$appId}";
+        $url = "http://api.openweathermap.org/data/2.5/forecast?id={$cityId}&units=imperial&APPID={$appId}";
 
         $cities = new \maidea\model\cities();
         $city = $cities->getCityById($cityId);

@@ -1,0 +1,14 @@
+<div class="weather-forecast">
+    {{#forecasts}}
+        {{#data}}
+            <div class="forecast-item">
+                {{#formatDate}}{{dt}}{{/formatDate}}
+                {{#weather}}
+                    {{#.}}
+                        {{main}}
+                    {{/.}}
+                {{/weather}}
+            </div>
+        {{/data}}
+    {{/forecasts}}
+</div>

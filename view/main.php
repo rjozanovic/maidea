@@ -47,7 +47,10 @@ class main extends viewAbstract
             )
         );
 
-        $content = $this->renderTemplate('main', $data);
+        $content = $this->includePartialTemplate('sidebar');
+        $content .= $this->includePartialTemplate('weather');
+        $content .= $this->includePartialTemplate('forecast');
+        $content .= $this->renderTemplate('main', $data);
 
         return $this->renderPage($content);
 

@@ -16,6 +16,15 @@ window.maidea = (function(m){
             };
         };
 
+        data['formatDegrees'] = function(){
+            return function(val, render){
+                val=render(val);
+                if(val){
+                    return (val * (9/5)) - 459.67;
+                }
+            }
+        }
+
         return data;
     };
 

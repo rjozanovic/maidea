@@ -16,8 +16,8 @@ class frontendController extends controllerAbstract
         $cityId = $this->getRequestParam('cityId');
         $weathers = new \maidea\model\weathers();
         $freshWeather = $weathers->getLatestWeather($cityId);
-        var_dump($freshWeather->getJson());
-        //TODO upToDate
+        $this->setJsonHeader();
+        echo $freshWeather->getJson();
     }
 
     //ajax
@@ -32,9 +32,20 @@ class frontendController extends controllerAbstract
         foreach($forecasts as $forecast){
             $ret['data'][] = $forecast->getJson();
         }
-
-        var_dump($ret);
+        $this->setJsonHeader();
+        echo json_encode($ret);
 
     }
+
+    public function getCityAutocompleteAction()
+    {
+        $q = $this->getRequestParam('q');
+        $cities = new \maidea\model\cities();
+        $this->setJsonHeader();
+        echo json_encode($cities->getAutocompleteCities($q));
+    }
+
+
+
 
 }

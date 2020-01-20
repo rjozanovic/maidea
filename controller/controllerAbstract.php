@@ -41,5 +41,10 @@ class controllerAbstract
             return null;
     }
 
+    protected function setJsonHeader()
+    {
+        header('Content-Type: application/json');
+    }
+
 
 }

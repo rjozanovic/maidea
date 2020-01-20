@@ -18,4 +18,18 @@ class cities extends modelsAbstract
         return $this->current();
     }
 
+    public function getAutocompleteCities($q, $limit = 10)
+    {
+        $this->setWhere('name LIKE :name', array('name' =>  $q . '%'), array('name' => \PDO::PARAM_STR))
+            ->setLimit($limit)
+            ->load();
+
+        $ret = array();
+        foreach($this as $city){
+            $ret[] = array('id' => $city->getCityId(), 'title' => $city->getName());
+        }
+        return $ret;
+
+    }
+
 }

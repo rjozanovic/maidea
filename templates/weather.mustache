@@ -1,0 +1,13 @@
+<div class="weather-now">
+    {{#weather}}
+        {{#data}}
+            <b>Current weather in {{name}}</b><hr>
+            {{#weather}}
+                {{#.}}
+                    {{main}}
+                {{/.}}
+            {{/weather}}
+        {{/data}}
+    {{/weather}}
+    <hr>
+</div>

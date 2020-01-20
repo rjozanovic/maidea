@@ -17,6 +17,7 @@ window.maidea = (function(m){
         for(var i = 0 ; i < partialEls.length ; i++)
             partials[partialEls.item(i).id] = partialEls.item(i).innerHTML;
         m.view.partialTemplates = partials;
+        console.log(partials);
     };
 
     return m;
