@@ -2,15 +2,9 @@ html, body{
     height: 100%;
     margin:0;
     padding: 0;
-}
-
-.sidebar{
-    background-color: #999;
-}
-
-.weather-info{
     background-color: #ccc;
 }
+
 
 #autoComplete_list{
     margin-left: 0 !important;
@@ -21,6 +15,17 @@ html, body{
     width:100%;
 }
 
+.weather-box{
+    text-align: center;
+}
+
+.weather-info{
+    box-sizing: border-box;
+    padding: 50px;
+}
+.forecast-item{
+    box-sizing: border-box;
+}
 
 @media only screen and (min-width: 800px) {
     .wrapper{
@@ -38,7 +43,7 @@ html, body{
         height: 100%;
     }
     .forecast-item{
-        width: 33%;
+        width: 32%;
         float: left;
     }
 }

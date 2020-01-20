@@ -20,7 +20,7 @@ window.maidea = (function(m){
             return function(val, render){
                 val=render(val);
                 if(val){
-                    return (val * (9/5)) - 459.67;
+                    return ((val * (9/5)) - 459.67).toFixed(2);
                 }
             }
         }

@@ -7,16 +7,7 @@ class main extends viewAbstract
     public function getOutput() {
 
         $weathers = new \maidea\model\weathers();
-        $latestWeather = $weathers->getLatestWeather($this->data['cityId']);
-        $weatherData = json_decode($latestWeather->getJson(), true);
-
         $forecasts = new \maidea\model\forecasts();
-        $forecasts->loadLatestForecasts($this->data['cityId']);
-        $forecastData = array();
-        foreach ($forecasts as $forecast)
-            $forecastData[] = json_decode($forecast->getJson(), true);
-
-        $cfg = new \maidea\model\configs();
 
         $data = array(
             'favoriteCities' => array(
@@ -37,20 +28,15 @@ class main extends viewAbstract
                     "name" => "Las Vegas"
                 )
             ),
-            'weather' => array(
-                'data' => $weatherData,
-                'upToDate' => $weatherData['dt'] + $cfg->getValue('weather_valid_duration') > time()
-            ),
-            'forecasts' => array(
-                'data' => $forecastData,
-                'isComplete' => count($forecastData) === 40
-            )
+            'weather' => $weathers->getJsonWithExtInfo($this->data['cityId']),
+            'forecasts' => $forecasts->getJsonWithExtInfo($this->data['cityId'])
         );
 
-        $content = $this->includePartialTemplate('sidebar');
-        $content .= $this->includePartialTemplate('weather');
-        $content .= $this->includePartialTemplate('forecast');
-        $content .= $this->renderTemplate('main', $data);
+        $content = $this->renderTemplate('sidebar', $data['favoriteCities']);
+        $content .= '<div class="weather-info">';
+        $content .= $this->renderTemplate('weather', $data['weather']);
+        $content .= $this->renderTemplate('forecast', $data['forecasts']);
+        $content .= '</div>';
 
         return $this->renderPage($content);
 

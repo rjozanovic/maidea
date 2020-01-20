@@ -5,7 +5,7 @@ namespace maidea\view;
 abstract class viewAbstract
 {
 
-    //private static includedTemplates
+    //private static includedTemplates      //TODO
 
     abstract public function getOutput();
 

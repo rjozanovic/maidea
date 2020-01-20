@@ -14,27 +14,18 @@ class frontendController extends controllerAbstract
     public function getWeatherDataAction()
     {
         $cityId = $this->getRequestParam('cityId');
-        $weathers = new \maidea\model\weathers();
-        $freshWeather = $weathers->getLatestWeather($cityId);
+        $forecasts = new \maidea\model\weathers();
         $this->setJsonHeader();
-        echo $freshWeather->getJson();
+        echo json_encode($forecasts->getJsonWithExtInfo($cityId));
     }
 
     //ajax
     public function getForecastDataAction()
     {
         $cityId = $this->getRequestParam('cityId');
-
         $forecasts = new \maidea\model\forecasts();
-        $forecasts->loadLatestForecasts($cityId);
-
-        $ret = array('data' => array(), 'complete' => $forecasts->count() === 40);
-        foreach($forecasts as $forecast){
-            $ret['data'][] = $forecast->getJson();
-        }
         $this->setJsonHeader();
-        echo json_encode($ret);
-
+        echo json_encode($forecasts->getJsonWithExtInfo($cityId));
     }
 
     public function getCityAutocompleteAction()
@@ -44,8 +35,5 @@ class frontendController extends controllerAbstract
         $this->setJsonHeader();
         echo json_encode($cities->getAutocompleteCities($q));
     }
-
-
-
 
 }

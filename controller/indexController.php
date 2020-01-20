@@ -12,7 +12,7 @@ class indexController extends controllerAbstract
             'action' => 'main'
         );
 
-        $controller = $this->getRequestParam('controller');
+        $controller = $this->getRequestParam('controller');     //TODO make acessible only via backendTask
         if($controller)
             $opt['controller'] = $controller;
 

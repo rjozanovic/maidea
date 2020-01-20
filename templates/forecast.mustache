@@ -1,14 +1,25 @@
 <div class="weather-forecast">
-    {{#forecasts}}
         {{#data}}
-            <div class="forecast-item">
-                {{#formatDate}}{{dt}}{{/formatDate}}
-                {{#weather}}
-                    {{#.}}
-                        {{main}}
-                    {{/.}}
-                {{/weather}}
-            </div>
+            <fieldset class="forecast-item">
+                <legend>{{#formatDate}}{{dt}}{{/formatDate}}</legend>
+                <div class="weather-box">
+                    {{#weather}}
+                        {{#.}}
+                            <img src="http://openweathermap.org/img/wn/{{icon}}@2x.png" title="{{main}} - {{description}}">
+                        {{/.}}
+                    {{/weather}}
+                </div>
+                <div class="main-box">
+                    <ul>
+                        {{#main}}
+                            <li>temp: {{#formatDegrees}}{{temp}}{{/formatDegrees}}ºF</li>
+                            <li>min: {{#formatDegrees}}{{temp_min}}{{/formatDegrees}}ºF</li>
+                            <li>max: {{#formatDegrees}}{{temp_max}}{{/formatDegrees}}ºF</li>
+                            <li>pressure: {{pressure}}</li>
+                            <li>humidity: {{humidity}}%</li>
+                        {{/main}}
+                    </ul>
+                </div>
+            </fieldset>
         {{/data}}
-    {{/forecasts}}
 </div>

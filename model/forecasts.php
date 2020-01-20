@@ -16,9 +16,23 @@ class forecasts extends modelsAbstract
             ->setOrderBy('datetime ASC')
             ->setLimit(40)
             ->load();
+    }
 
-        if($this->count() < 40)       //pull new data
+    public function getJsonWithExtInfo($cityId)
+    {
+        $ret = array("reload" => array("dataUrl" => "index.php?action=getForecastData&cityId=" . $cityId));
+        $this->loadLatestForecasts($cityId);
+        $forecastData = array();
+        foreach ($this as $forecast)
+            $forecastData[] = json_decode($forecast->getJson(), true);
+
+        if($this->count() < 40){       //pull new data
             exec("php backgroundTask.php pullForecastData cityId={$cityId} >/dev/null 2>&1 &");
+            $ret['reload']["inTime"] = 5;
+        }
+
+        $ret['data'] = $forecastData;
+        return $ret;
 
     }
 

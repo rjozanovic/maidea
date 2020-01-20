@@ -8,6 +8,7 @@
 
     <script src="/js/helpers.js"></script>
     <script src="/js/view.js"></script>
+    <script src="/js/ajax.js"></script>
     <script src="/js/processData.js"></script>
     <script src="/js/main.js"></script>
 
@@ -16,9 +17,11 @@
 
 
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/css/autoComplete.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/js/autoComplete.min.js"></script>
+    <!--link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/css/autoComplete.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/js/autoComplete.min.js"></script-->
 
+    <link rel="stylesheet" type="text/css" href="css/autoComplete.css">
+    <script src="js/vendor/autoComplete.min.js"></script>
 
 
     <script>

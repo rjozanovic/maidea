@@ -26,14 +26,26 @@ class weathers extends modelsAbstract
          */
         $freshWeather = $this->current();
 
-        $cfg = new \maidea\model\configs();
+        return $freshWeather;
+    }
 
+    /**
+     * Will initiate download of new data if needed
+     * @param int $cityId
+     */
+    public function getJsonWithExtInfo($cityId)
+    {
+        $ret = array("reload" => array("dataUrl" => "index.php?action=getWeatherData&cityId=" . $cityId));
+        $cfg = new \maidea\model\configs();     //TODO
+        $freshWeather = $this->getLatestWeather($cityId);
         $weatherData = json_decode($freshWeather->getJson(), true);
         $lastDownload = $weatherData['dt'];
-        if($lastDownload + (int)$cfg->getValue('weather_valid_duration') < time())
+        if($lastDownload + (int)$cfg->getValue('weather_valid_duration') < time()) {
             exec("php backgroundTask.php pullWeatherData cityId={$cityId} >/dev/null 2>&1 &");
-
-        return $freshWeather;
+            $ret['reload']["inTime"] = 5;
+        }
+        $ret['data'] = $weatherData;
+        return $ret;
     }
 
 }
