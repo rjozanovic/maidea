@@ -1,5 +1,7 @@
 <?php
 
+//TODO disable outside acess to backend controller (allow only from backgroundTask.php)
+
 namespace maidea\controller;
 
 class backendController extends controllerAbstract

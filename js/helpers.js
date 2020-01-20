@@ -90,10 +90,7 @@ window.maidea = (function(m){
         var day = m.helpers.intToTwoDigit(date.getDate());
         var month = m.helpers.intToTwoDigit(date.getMonth() + 1);     //0-11
         var year = date.getFullYear();
-        var hours = m.helpers.intToTwoDigit(date.getHours());
-        var minutes = m.helpers.intToTwoDigit(date.getMinutes());
-        var seconds = m.helpers.intToTwoDigit(date.getSeconds());
-        //return day + '.' + month + '.' + year + '. ' + hours + ':' + minutes + (includeSeconds ? (':' + seconds) : '');
+        var hours = date.getHours();
         return day + '.' + month + '.' + year + '. ' + hours + 'h';
     };
 

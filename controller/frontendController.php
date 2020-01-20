@@ -1,5 +1,6 @@
 <?php
 
+
 namespace maidea\controller;
 
 class frontendController extends controllerAbstract

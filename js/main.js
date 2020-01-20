@@ -11,13 +11,16 @@ window.maidea = (function(m){
         return frag;
     }
 
+    function processChange(name, data, target){
+
+    }
+
     m.init = function(){
 
         m.view.registerPartialTemplates();
 
         for(var i in window.maidea_renderRequests){
 
-            (function(){
                 var item = window.maidea_renderRequests[i];
 
                 var frag = render(item.name, item.data);
@@ -34,7 +37,6 @@ window.maidea = (function(m){
                         }, true);
                     }, item.data.reload.inTime * 1000);
                 }*/
-            })();
 
         }
 

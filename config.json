@@ -1,8 +1,8 @@
 {
   "db": {
     "host": "localhost",
-    "username": "rudi",
-    "password": "flood1",
+    "username": "maidea_rj",
+    "password": "password",
     "dbname": "maidea_rudolf_jozanovic",
     "migrationVersion": 5
   },
